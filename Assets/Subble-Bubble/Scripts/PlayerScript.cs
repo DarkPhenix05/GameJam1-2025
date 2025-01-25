@@ -1,12 +1,15 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.InputSystem;
 
 public class BurbujaScript : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private float _fallScale;
     [SerializeField] private float _breakeScale;
+    [SerializeField] private float _sideMove;
 
-    public float _aceleraccionHundimiento; // Velocidad de hundimiento de la burbuja
     public float _raycastDistancia = 10f; // Distancia del raycast
     public float _velocidadRotacion = 5f; // Velocidad de rotación del raycast (basado en el mouse)
     public LayerMask _capaInteractuable; // Capa que el raycast puede impactar (por ejemplo, objetos que interactúan con la burbuja)
@@ -15,7 +18,10 @@ public class BurbujaScript : MonoBehaviour
     private RaycastHit _hitInfo; // Información del raycast
     private Vector2 _raycastDireccion; // Dirección del raycast
 
-    [SerializeField] private int MaxSpeed; // The mas speed the capsule can axelerate to.
+    [SerializeField] private int _maxSpeed; // The mas speed the capsule can axelerate to.
+
+    [SerializeField] private Keyboard _keyboard;
+    [SerializeField] private Gamepad _gamepad;
 
     void Start()
     {
@@ -31,12 +37,26 @@ public class BurbujaScript : MonoBehaviour
         }
 
         _rb.gravityScale = _fallScale;
+        _rb.freezeRotation = true;
+
+        if (Keyboard.current != null)
+        {
+            _keyboard = Keyboard.current;
+        }
+
+        else if (Gamepad.current != null)
+        {
+            _gamepad = Gamepad.current;
+        }
     }
 
     void Update()
     {
         // Hacer que la burbuja se hunda
         HundirBurbuja();
+
+        // MovePlayer
+        PlayerMovement();
 
         // Rotar el raycast hacia el mouse
         RotarRaycast();
@@ -50,15 +70,22 @@ public class BurbujaScript : MonoBehaviour
     // Función para hacer que la burbuja se hunda
     void HundirBurbuja()
     {
-        if(_rb != null)
+        if(_rb.velocity.y >= _maxSpeed)
         {
-            if(_rb.velocity.y >= MaxSpeed)
-            {
-                _rb.velocity = new Vector2(_rb.velocity.x, MaxSpeed);
-            }
+            _rb.velocity = new Vector2(_rb.velocity.x, _maxSpeed);
+            Debug.Log("Max Speed Reached");
         }
 
-        //transform.position += Vector3.down * _velocidadHundimiento * Time.deltaTime;
+    }
+
+    void PlayerMovement()
+    {
+
+        if (_keyboard.aKey.isPressed)
+        {
+            _rb.AddForce(new Vector2(_sideMove, 0.0f));
+            Debug.Log("A");
+        }
     }
 
     // Función para rotar el raycast en función de la posición del mouse

@@ -1738,16 +1738,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 0}
-  _fallScale: 0.5
-  _breakeScale: 0.25
+  _fallScale: 0
+  _breakeScale: 0
   _aceleraccionHundimiento: 0
   _raycastDistancia: 10
   _velocidadRotacion: 5
   _capaInteractuable:
     serializedVersion: 2
-    m_Bits: 1024
-  _origenRaycast: {fileID: 1279856807}
-  MaxSpeed: 10
+    m_Bits: 0
+  _origenRaycast: {fileID: 0}
+  MaxSpeed: 0
 --- !u!212 &1828019877
 SpriteRenderer:
   m_ObjectHideFlags: 0
