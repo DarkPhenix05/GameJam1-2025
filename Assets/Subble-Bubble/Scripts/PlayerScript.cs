@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -6,9 +7,10 @@ using UnityEngine.InputSystem;
 public class BurbujaScript : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rb;
-    [SerializeField] private float _fallScale;
-    [SerializeField] private float _breakeScale;
-    [SerializeField] private float _sideMove;
+    [SerializeField] private float _gravityScale;
+    [SerializeField] private Vector2 _sideMove;
+    [SerializeField] private float _hopDuration;
+    [SerializeField] private float _decelerate;
 
     public float _raycastDistancia = 10f; // Distancia del raycast
     public float _velocidadRotacion = 5f; // Velocidad de rotación del raycast (basado en el mouse)
@@ -18,10 +20,12 @@ public class BurbujaScript : MonoBehaviour
     private RaycastHit _hitInfo; // Información del raycast
     private Vector2 _raycastDireccion; // Dirección del raycast
 
-    [SerializeField] private int _maxSpeed; // The mas speed the capsule can axelerate to.
+    [SerializeField] private int _maxSpeed; // The max speed the capsule can axelerate to.
+    [SerializeField] private int _minSpeed; // The min speed the capsule can axelerate to.
 
-    [SerializeField] private Keyboard _keyboard;
-    [SerializeField] private Gamepad _gamepad;
+    private Keyboard _keyboard;
+    private float _counter = 0.0f;
+    private bool _detectInput = true;
 
     void Start()
     {
@@ -36,17 +40,12 @@ public class BurbujaScript : MonoBehaviour
             _rb = this.gameObject.GetComponent<Rigidbody2D>();
         }
 
-        _rb.gravityScale = _fallScale;
+        _rb.gravityScale = _gravityScale;
         _rb.freezeRotation = true;
 
         if (Keyboard.current != null)
         {
             _keyboard = Keyboard.current;
-        }
-
-        else if (Gamepad.current != null)
-        {
-            _gamepad = Gamepad.current;
         }
     }
 
@@ -64,6 +63,7 @@ public class BurbujaScript : MonoBehaviour
         // Lanzar el raycast para detectar colisiones
         LanzarRaycast();
 
+        //Debug.Log(_rb.velocity.y);
     }
 
 
@@ -73,18 +73,36 @@ public class BurbujaScript : MonoBehaviour
         if(_rb.velocity.y >= _maxSpeed)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _maxSpeed);
-            Debug.Log("Max Speed Reached");
         }
-
     }
 
     void PlayerMovement()
     {
-
-        if (_keyboard.aKey.isPressed)
+        _counter += Time.deltaTime;
+        
+        if (_keyboard.aKey.IsPressed() && _detectInput)
         {
-            _rb.AddForce(new Vector2(_sideMove, 0.0f));
-            Debug.Log("A");
+            //_detectInput = false;
+            _rb.velocity = new Vector2(-_sideMove.x, _sideMove.y);
+        }
+        else if (_keyboard.dKey.isPressed && _detectInput)
+        {
+            //_detectInput = false;
+            _rb.velocity = new Vector2(_sideMove.x, _sideMove.y);
+        }
+
+        if( _keyboard.wKey.isPressed) 
+        {
+            if(_rb.velocity.y < _minSpeed) 
+            {
+                _rb.AddForce(new Vector2(0, _decelerate));
+                //Debug.Log("BREAKING");
+            }
+            else
+            {
+                _rb.velocity = new Vector2(_rb.velocity.x, _minSpeed);
+                Debug.Log("MAX - BREAKING");
+            }
         }
     }
 
@@ -125,5 +143,19 @@ public class BurbujaScript : MonoBehaviour
         // Dibujar el raycast en Gizmos
         Gizmos.color = Color.red;
         Gizmos.DrawRay(_origenRaycast.position, _raycastDireccion * _raycastDistancia);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision == null) return;
+        else
+        {
+            Debug.Log(_rb.velocity);
+        }
     }
 }
