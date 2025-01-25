@@ -23,7 +23,7 @@ public class MiniGameScript : MonoBehaviour
 
 
     //Al iniciar el minijuego se nos dara una alerta para escapar de el, teniendo un temporizador.
-    void StartMinigame()
+   public void StartMinigame()
     {
         print("Escapa del Pulpo");
         isMinigameActive = true;
