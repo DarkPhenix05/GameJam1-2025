@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,13 @@ public class MiniGameScript : MonoBehaviour
 
     private bool isMinigameActive = false;
     private bool isGameOver = false;
+    public GameObject clickimage;
+
+
+    [Header("ClicsControl")]
+    [SerializeField]
+    private int clicksToWin = 10;
+    private int currentClickCount = 0;
 
     [SerializeField]
     private float gameOverTimer = 0f;
@@ -23,12 +31,14 @@ public class MiniGameScript : MonoBehaviour
 
 
     //Al iniciar el minijuego se nos dara una alerta para escapar de el, teniendo un temporizador.
-   public void StartMinigame()
+    public void StartMinigame()
     {
         print("Escapa del Pulpo");
         isMinigameActive = true;
         isGameOver = false;
         gameOverTimer = 0f;
+        currentClickCount = 0;
+        clickimage.SetActive(true);
     }
 
     void Start()
@@ -46,9 +56,17 @@ public class MiniGameScript : MonoBehaviour
                 print("Clic Detectado");
                 Vector2 ray = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(ray, Vector2.zero);
+                print("Objeto clicado: " + hit.collider.name);
                 if (hit.collider != null && hit.collider.CompareTag("TargetZone"))
                 {
-                    MinigameSuccess();
+                    print("Zona objetivo clicada");
+                    currentClickCount++;
+                    print("Clics acuales" + currentClickCount);
+
+                    if (currentClickCount >= clicksToWin)
+                    {
+                        MinigameSuccess();
+                    }
                 }
             }
 
@@ -65,8 +83,10 @@ public class MiniGameScript : MonoBehaviour
 
     void MinigameSuccess()
     {
+
         print("Desciende");
         isMinigameActive = false;
+        DisableMinigameObjects();
     }
 
     //Esta es la pantalla de GameOver
@@ -85,5 +105,12 @@ public class MiniGameScript : MonoBehaviour
             print("Minijuego superado");
             MinigameSuccess();
         }
+    }
+    void DisableMinigameObjects()
+    {
+        GameObject[] minigameObjects = GameObject.FindGameObjectsWithTag("MinigameObject");
+        foreach (GameObject obj in minigameObjects)
+        { gameObject.SetActive(false); }
+        clickimage.SetActive(false);
     }
 }
