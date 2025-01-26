@@ -11,7 +11,7 @@ public class MiniGameScript : MonoBehaviour
     private bool isMinigameActive = false;
     private bool isGameOver = false;
     public GameObject clickimage;
-
+    public GameObject _octopusScript;
 
     [Header("ClicsControl")]
     [SerializeField]
@@ -43,7 +43,10 @@ public class MiniGameScript : MonoBehaviour
 
     void Start()
     {
-
+        if (_octopusScript == null)
+        {
+            _octopusScript = FindObjectOfType<OctopusScript>().gameObject;
+        }
     }
 
     // Aquí se encuentra el funcionamiento del minijuego del minijuego con raycast y detección de click
@@ -56,7 +59,7 @@ public class MiniGameScript : MonoBehaviour
                 print("Clic Detectado");
                 Vector2 ray = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(ray, Vector2.zero);
-                print("Objeto clicado: " + hit.collider.name);
+                // print("Objeto clicado: " + hit.collider.name);
                 if (hit.collider != null && hit.collider.CompareTag("TargetZone"))
                 {
                     print("Zona objetivo clicada");
@@ -83,7 +86,6 @@ public class MiniGameScript : MonoBehaviour
 
     void MinigameSuccess()
     {
-
         print("Desciende");
         isMinigameActive = false;
         DisableMinigameObjects();
@@ -108,9 +110,13 @@ public class MiniGameScript : MonoBehaviour
     }
     void DisableMinigameObjects()
     {
-        GameObject[] minigameObjects = GameObject.FindGameObjectsWithTag("MinigameObject");
-        foreach (GameObject obj in minigameObjects)
-        { gameObject.SetActive(false); }
-        clickimage.SetActive(false);
+        _octopusScript.GetComponent<OctopusScript>().Victory();
+        /*
+         * Se implemento una corrutina en el OctoScript el cual esta en el GO de "pulpo"
+         * Este escript esta en la UI, para facilitar que pulpo oobtenga su referencia.
+         * 
+         * Se quito la logica de TAGS
+        */
     }
 }
+
