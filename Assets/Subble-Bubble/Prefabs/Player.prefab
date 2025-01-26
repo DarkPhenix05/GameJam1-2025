@@ -37,7 +37,7 @@ Transform:
   - {fileID: 6603398985059884290}
   - {fileID: 1602799122826123833}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7675356239634234571
 SpriteRenderer:
@@ -103,8 +103,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7bac15a5ebbd44ab5bd50699b1ff1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cooldown: {fileID: 0}
   _rb: {fileID: 2830583892152786235}
-  _gravityScale: 0.25
+  _gravityScale: 0.15
   _sideMove: {x: 0.08, y: 8}
   _hopDuration: 0.2
   _timeBetweenHops: 3
@@ -112,6 +113,7 @@ MonoBehaviour:
   _hopTimeCounter: 0
   _canHop: 1
   _decelerate: 8
+  mousePressed: 0
   _raycastDistancia: 10
   _velocidadRotacion: 5
   _capaInteractuable:
@@ -120,6 +122,15 @@ MonoBehaviour:
   _origenRaycast: {fileID: 6603398985059884290}
   _maxSpeed: -3
   _minSpeed: 5
+  Oxygen: 100
+  OxygenMax: 1000
+  velocidadIzquierda1: 3
+  velocidadIzquierda2: 5
+  velocidadDerecha1: 3
+  velocidadDerecha2: 5
+  FlashIzq: {fileID: 0}
+  FlashDer: {fileID: 0}
+  _changeFlashButton: {fileID: 0}
 --- !u!50 &2830583892152786235
 Rigidbody2D:
   serializedVersion: 4
