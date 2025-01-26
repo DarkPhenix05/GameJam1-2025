@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BurbujaScript : MonoBehaviour
 {
@@ -106,35 +107,35 @@ public class BurbujaScript : MonoBehaviour
         mousePos.z = transform.position.z; // Asegurarnos de que el raycast solo se mueva en el plano XY (2D)
 
         // Obtener la dirección hacia el mouse
-        raycastDireccion = (mousePos - origenRaycast.position).normalized;
+        _raycastDireccion = (mousePos - _origenRaycast.position).normalized;
 
         // Rotar el origenRaycast para que apunte hacia el mouse
-        float angle = Mathf.Atan2(raycastDireccion.y, raycastDireccion.x) * Mathf.Rad2Deg;
-        origenRaycast.rotation = Quaternion.Slerp(origenRaycast.rotation, Quaternion.Euler(0f, 0f, angle), velocidadRotacion * Time.deltaTime);
+        float angle = Mathf.Atan2(_raycastDireccion.y, _raycastDireccion.x) * Mathf.Rad2Deg;
+        _origenRaycast.rotation = Quaternion.Slerp(_origenRaycast.rotation, Quaternion.Euler(0f, 0f, angle), _velocidadRotacion * Time.deltaTime);
     }
 
     // Función para lanzar el raycast y detectar colisiones
     void LanzarRaycast()
     {
         // Dibujar el raycast para ver la dirección en la escena (utilizando Gizmos)
-        Debug.DrawRay(origenRaycast.position, raycastDireccion * raycastDistancia, Color.red);
+        Debug.DrawRay(_origenRaycast.position, _raycastDireccion * _raycastDistancia, Color.red);
 
         // Lanzar el raycast
-        if (Physics.Raycast(origenRaycast.position, raycastDireccion, out hitInfo, raycastDistancia, capaInteractuable))
+        if (Physics.Raycast(_origenRaycast.position, _raycastDireccion, out _hitInfo, _raycastDistancia, _capaInteractuable))
         {
             // Si el raycast golpea algo, mostrar la información
-            Debug.Log("Raycast impactó con: " + hitInfo.collider.name);
+            Debug.Log("Raycast impactó con: " + _hitInfo.collider.name);
         }
     }
 
     // Dibujar el raycast con Gizmos en la vista de la escena
     void OnDrawGizmos()
     {
-        if (origenRaycast == null) return;
+        if (_origenRaycast == null) return;
 
         // Dibujar el raycast en Gizmos
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(origenRaycast.position, raycastDireccion * raycastDistancia);
+        Gizmos.DrawRay(_origenRaycast.position, _raycastDireccion * _raycastDistancia);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
