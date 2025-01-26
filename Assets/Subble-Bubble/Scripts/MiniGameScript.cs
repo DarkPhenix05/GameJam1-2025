@@ -11,7 +11,6 @@ public class MiniGameScript : MonoBehaviour
     private bool isGameOver = false;
     public GameObject clickimage;
     public GameObject _octopusScript;
-    public Animator _gameOverAnimator;
 
     [Header("ClicsControl")]
     [SerializeField]
@@ -19,7 +18,7 @@ public class MiniGameScript : MonoBehaviour
     private int currentClickCount = 0;
 
     [SerializeField]
-    private float gameOverTimer = 2.0f;
+    private float gameOverTimer = 0f;
 
 
    // Con esto mandamos a llamar el minijuego de esta forma iniciandolo al colisionar con el pulpo.
@@ -95,13 +94,7 @@ public class MiniGameScript : MonoBehaviour
     void EndMinigame()
     { print("GameOver");
         isMinigameActive = false;
-        isGameOver = true;
-        if (_gameOverAnimator != null)
-        {
-            _gameOverAnimator.SetTrigger("GameOver");
-
-        }
-        Invoke("RestartGameplay", 2f);
+        isGameOver = false;
             }
 
     // Aqui se encuentra la pantalla de victoria del minijuego
@@ -122,11 +115,5 @@ public class MiniGameScript : MonoBehaviour
          * 
          * Se quito la logica de TAGS
         */
-    }
-
-    void RestartGameplay()
-    {
-        isMinigameActive= false;
-        isGameOver= false;
     }
 }

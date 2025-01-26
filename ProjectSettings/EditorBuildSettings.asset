@@ -21,6 +21,6 @@ EditorBuildSettings:
     path: Assets/Scenes/OrdenMenus/Escenas/Level.unity
     guid: 1dfd7b7b18984d147a77e6b9791ec15d
   - enabled: 1
-    path: Assets/Scenes/OrdenMenus/Escenas/Turorial.unity
+    path: Assets/EscenasFinales/Turorial.unity
     guid: 38e1cc352bf4dcb4d8232c480bd4e221
   m_configObjects: {}

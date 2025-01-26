@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 5100194672093240513}
   - component: {fileID: 5726243501083433114}
   - component: {fileID: 3094752995019184394}
-  m_Layer: 3
+  - component: {fileID: 1687175692222660667}
+  m_Layer: 0
   m_Name: Octopus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &660354368413338130
 SpriteRenderer:
@@ -190,3 +191,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1687175692222660667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6941201666818667991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22aaa428eab2c6048bcbe25f8b6128b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverDelay: 2
+  clickimage: {fileID: 0}
+  _octopusScript: {fileID: 0}
+  clicksToWin: 10
+  gameOverTimer: 0

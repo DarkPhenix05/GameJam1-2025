@@ -7,7 +7,7 @@ public class PlayerScript : MonoBehaviour
     public Image _cooldown;
 
     [Header("Movement")]
-    [SerializeField] private Rigidbody2D _rb;
+   
     [SerializeField] private float _gravityScale;
 
     [SerializeField] private Vector2 _sideMove;
@@ -31,10 +31,12 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField] private int _maxSpeed;
     [SerializeField] private int _minSpeed;
+    [SerializeField] public int _DownVelocity;
 
     [Header("Oxygen")]
     [SerializeField] public int Oxygen;
     [SerializeField] private int OxygenMax;
+    [SerializeField] private OxygenManager oxygenManager;
 
     [Header("Horizontal Velocity")]
     // Velocidades modificables para cada tag
@@ -47,6 +49,10 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] public GameObject FlashIzq;
     [SerializeField] public GameObject FlashDer;
     [SerializeField] GameObject _changeFlashButton;
+    [SerializeField] public GameObject luz;
+
+    [SerializeField] public bool FlashPermiso = false;
+
     int countflah = 0;
 
     void Start()
@@ -54,11 +60,7 @@ public class PlayerScript : MonoBehaviour
         if (_origenRaycast == null)
             _origenRaycast = transform;
 
-        if (_rb == null)
-            _rb = this.gameObject.GetComponent<Rigidbody2D>();
-
-        _rb.gravityScale = _gravityScale;
-        _rb.freezeRotation = true;
+       
     }
 
     void Update()
@@ -67,67 +69,22 @@ public class PlayerScript : MonoBehaviour
         PlayerMovement();
         RotarRaycast();
         LanzarRaycast();
-        
+
+        transform.Translate(Vector2.up * -2.5f * Time.deltaTime);
+
     }
 
     void HundirBurbuja()
     {
-        if (_rb.velocity.y >= _maxSpeed)
-            _rb.velocity = new Vector2(_rb.velocity.x, _maxSpeed);
+        float movement = _DownVelocity * Time.deltaTime;
+        
     }
 
     void PlayerMovement()
     {
-        if (Input.GetKey(KeyCode.A) && _canHop)
-        {
-            _hopTimeCounter += Time.deltaTime;
-            if (_hopTimeCounter < _hopDuration)
-            {
-                _rb.AddForce(new Vector2(-_sideMove.x, _sideMove.y), ForceMode2D.Impulse);
-            }
+       
 
-            Debug.Log("Hop L: " + _hopTimeCounter);
-        }
-        else if (Input.GetKeyUp(KeyCode.A))
-        {
-            _canHop = false;
-            _hopTimeCounter = 0.0f;
-        }
-        if (Input.GetKey(KeyCode.D) && _canHop)
-        {
-            _hopTimeCounter += Time.deltaTime;
-            if (_hopTimeCounter < _hopDuration)
-            {
-                _rb.AddForce(new Vector2(_sideMove.x, _sideMove.y), ForceMode2D.Impulse);
-            }
-
-            Debug.Log("Hop R: " + _hopTimeCounter);
-        }
-        else if (Input.GetKeyUp(KeyCode.D))
-        {
-            _canHop = false;
-            _hopTimeCounter = 0.0f;
-        }
-
-        if (!_canHop)
-        {
-            if (_midTimeCounter < _timeBetweenHops)
-            {
-                _midTimeCounter += Time.deltaTime;
-
-                _cooldown.fillAmount = _timeBetweenHops / _midTimeCounter;
-            }
-            else
-            {
-                _midTimeCounter = 0.0f;
-                _canHop = true;
-            }
-        }
-
-        //else if (Input.GetKey(KeyCode.W))
-        //{
-            
-        //}
+       
     }
 
     void RotarRaycast()
@@ -152,112 +109,115 @@ public class PlayerScript : MonoBehaviour
 
             if (hit.collider.CompareTag("Izquierda1"))
             {
-                Debug.Log("Izquierda");
-                _rb.velocity = new Vector2(velocidadIzquierda1, _rb.velocity.y);
+                //Debug.Log("Izquierda");
+                transform.Translate(Vector2.right * 2.5f * Time.deltaTime);
             }
             else if (hit.collider.CompareTag("Derecha1"))
             {
-                Debug.Log("Derecha1");
-                _rb.velocity = new Vector2(-velocidadDerecha1, _rb.velocity.y);
+                //Debug.Log("Derecha1");
+                transform.Translate(Vector2.left * 2.5f * Time.deltaTime);
             }
 
-            if (hit.collider.CompareTag("FlashIzquierda"))
+            if (hit.collider != null)
             {
-                if(Input.GetMouseButtonDown(0) && countflah == 0) 
+                if ((hit.collider.CompareTag("OxigenoIzquierda") || hit.collider.CompareTag("OxigenoDerecha")) && Input.GetMouseButton(0))
                 {
-                    Debug.Log("FlashIzq");
-                    FlashIzq.SetActive(true);
-                    countflah++;
+                    Debug.Log("Incrementando oxígeno...");
+                    oxygenManager.IncreaseOxygen();
+                    
                 }
-                else if (Input.GetMouseButtonUp(0))
+
+
+                if (hit.collider.CompareTag("FlashIzquierda"))
+                {
+                    if (Input.GetMouseButtonDown(0) && FlashPermiso == false)
+                    {
+                        Debug.Log("FlashIzq");
+                        FlashIzq.SetActive(true);
+                        
+                    }
+                    else if (Input.GetMouseButtonUp(0))
+                    {
+                        FlashIzq.SetActive(false);
+                        ChangeFlash();
+                        luz.SetActive(false);
+                        FlashPermiso = false;
+                    }
+
+                }
+                else
                 {
                     FlashIzq.SetActive(false);
-                    ChangeFlash();
                 }
 
-            }
-            else
-            {
-                FlashIzq.SetActive(false);
-            }
-            
-            if (hit.collider.CompareTag("FlashDerecha"))
-            {
-                if(Input.GetMouseButtonDown(0) && countflah == 0)
+                if (hit.collider.CompareTag("FlashDerecha"))
                 {
-                Debug.Log("FlashDer");
-                FlashDer.SetActive(true);
-                countflah++;
+                    if (Input.GetMouseButtonDown(0) && FlashPermiso == false)
+                    {
+                        Debug.Log("FlashDer");
+                        FlashDer.SetActive(true);
+                        
+                    }
+                    else if (Input.GetMouseButtonUp(0))
+                    {
+                        FlashDer.SetActive(false);
+                        ChangeFlash(); luz.SetActive(false);
+                        FlashPermiso = false;
+                    }
+
                 }
-                else if (Input.GetMouseButtonUp(0))
+                else
                 {
                     FlashDer.SetActive(false);
-                    ChangeFlash();
+                }
+
+                if (hit.collider.CompareTag("Freno"))
+                {
+
+                    if (Input.GetMouseButton(0))
+                    {
+                        Debug.Log("Freno");
+                        transform.Translate(Vector2.down * -2.5f * Time.deltaTime);
+                    }
+                    else if (Input.GetMouseButtonUp(0))
+                    {
+                        Debug.Log("NoFreno");
+                    }
+
+
+
                 }
 
             }
             else
             {
-                FlashDer.SetActive(false);
+                Debug.Log("NoColisiona");
             }
-
-            if (hit.collider.CompareTag("Freno"))
-            {
-
-                if (Input.GetMouseButton(0))
-                {
-                    Debug.Log("Freno");
-                    if (_rb.velocity.y < _minSpeed)
-                    {
-                        if (_rb.velocity.x > 0)
-                            _rb.AddForce(new Vector2(-1, _decelerate));
-
-                        else if (_rb.velocity.x < 0)
-                            _rb.AddForce(new Vector2(1, _decelerate));
-
-                        Debug.Log("BREAKING");
-                    }
-                    else
-                    {
-                        if (_rb.velocity.x > 0)
-                            _rb.velocity = new Vector2(_rb.velocity.x - 1, _minSpeed);
-
-                        else if (_rb.velocity.x < 0)
-                            _rb.velocity = new Vector2(_rb.velocity.x + 1, _minSpeed);
-
-                        Debug.Log("MAX - BREAKING");
-                    }
-                }
-                else if (Input.GetMouseButtonUp(0))
-                {
-                    Debug.Log("NoFreno");
-                }
-                
-          
-                
-            }
-
         }
-        else
-        {
-            Debug.Log("NoColisiona");
-        }
-    }
 
-    void ChangeFlash()
-    {
-        if(countflah == 1)
+        void ChangeFlash()
         {
+            FlashPermiso = true;
             _changeFlashButton.SetActive(true);
+            
+            //if (countflah == 1)
+            //{
+            //    _changeFlashButton.SetActive(true);
+            //}
         }
+
+       
+
+
+        //void OnDrawGizmos()
+        //{
+        //    if (_origenRaycast == null) return;
+
+
+        //    Gizmos.color = Color.red;
+        //    Gizmos.DrawRay(_origenRaycast.position, _raycastDireccion * _raycastDistancia);
+        //}
+
     }
 
-    void OnDrawGizmos()
-    {
-        if (_origenRaycast == null) return;
-
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(_origenRaycast.position, _raycastDireccion * _raycastDistancia);
-    }
 }

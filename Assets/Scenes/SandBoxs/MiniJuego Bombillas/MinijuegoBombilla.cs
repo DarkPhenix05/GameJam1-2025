@@ -1,27 +1,23 @@
 using UnityEngine;
 
-public class MinijuegoPilas : MonoBehaviour
+public class MinijuegoObjetos : MonoBehaviour
 {
-    public GameObject objetoIzquierdo; // Objeto que está a la izquierda
-    public GameObject objetoDerecho; // Objeto que está a la derecha
-    public GameObject zonaObjetivo; // Zona donde debe estar el objeto derecho
-    public GameObject panelMinijuego; // Panel del minijuego para activarlo/desactivarlo
+    public GameObject objetoDerecho; // Objeto que empieza a la derecha
+    public GameObject objetoIzquierdo; // Objeto que empieza a la izquierda
+    public GameObject zonaObjetivo; // Zona objetivo (posición inicial del objeto derecho)
+    public GameObject panelMinijuego; // Panel o contenedor del minijuego
 
-    public bool derechoFueraDeZona = false; // Detecta si el objeto derecho salió de la zona objetivo
-    public bool izquierdoEnZona = false; // Detecta si el objeto izquierdo tocó la zona objetivo al menos una vez
+    private Vector3 posicionInicialDerecho; // Posición inicial del objeto derecho
+    private Vector3 posicionInicialIzquierdo; // Posición inicial del objeto izquierdo
 
-    private Collider2D zonaCollider; // Collider de la zona objetivo
-    private Collider2D izquierdoCollider; // Collider del objeto izquierdo
-    private bool minijuegoTerminado = false; // Para evitar repetir la lógica de ganar
+    private bool derechoMovido = false; // Indica si el objeto derecho se movió fuera de la zona objetivo
+    private bool izquierdoColocado = false; // Indica si el objeto izquierdo se colocó en la zona objetivo
 
     void Start()
     {
-        // Obtener los colliders necesarios
-        zonaCollider = zonaObjetivo.GetComponent<Collider2D>();
-        izquierdoCollider = objetoIzquierdo.GetComponent<Collider2D>();
-
-        // Desactivar el collider del objeto izquierdo al inicio
-        izquierdoCollider.enabled = false;
+        // Guardar las posiciones iniciales
+        posicionInicialDerecho = objetoDerecho.transform.position;
+        posicionInicialIzquierdo = objetoIzquierdo.transform.position;
 
         // Asegurarnos de que el minijuego esté desactivado al inicio
         panelMinijuego.SetActive(false);
@@ -29,65 +25,83 @@ public class MinijuegoPilas : MonoBehaviour
 
     void Update()
     {
-        if (minijuegoTerminado) return; // Salir si ya terminó el minijuego
-
-        // Control del arrastre del objeto derecho
-        if (Input.GetMouseButton(0))
+        void Update()
         {
-            Vector3 posicionMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            posicionMouse.z = 0;
-
-            Collider2D colisionDerecho = Physics2D.OverlapPoint(posicionMouse);
-            if (colisionDerecho != null && colisionDerecho.gameObject == objetoDerecho)
-            {
-                objetoDerecho.transform.position = posicionMouse;
-            }
+            panelMinijuego.transform.position = Camera.main.transform.position;
         }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            // Actualizar el estado de "derechoFueraDeZona"
-            derechoFueraDeZona = !zonaCollider.bounds.Contains(objetoDerecho.transform.position);
 
-            // Activar el collider del objeto izquierdo si el derecho está fuera de la zona
-            if (derechoFueraDeZona)
+
+        // Si ya se completó el minijuego, no hacer nada
+        if (izquierdoColocado) return;
+
+        // Movimiento del objeto derecho
+        if (Input.GetMouseButton(0) && !derechoMovido)
+        {
+            MoverObjetoConMouse(objetoDerecho);
+
+            // Verificar si el objeto derecho salió de la zona objetivo
+            if (!zonaObjetivo.GetComponent<Collider2D>().bounds.Contains(objetoDerecho.transform.position))
             {
-                izquierdoCollider.enabled = true;
+                derechoMovido = true; // Marca que el objeto derecho fue movido
+                Debug.Log("¡Objeto derecho movido fuera de la zona!");
             }
         }
 
-        // Control del arrastre del objeto izquierdo
-        if (izquierdoCollider.enabled && Input.GetMouseButton(0))
+        // Movimiento del objeto izquierdo (solo permitido si el derecho ya se movió)
+        if (Input.GetMouseButton(0) && derechoMovido)
         {
-            Vector3 posicionMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            posicionMouse.z = 0;
+            MoverObjetoConMouse(objetoIzquierdo);
 
-            Collider2D colisionIzquierdo = Physics2D.OverlapPoint(posicionMouse);
-            if (colisionIzquierdo != null && colisionIzquierdo.gameObject == objetoIzquierdo)
+            // Verificar si el objeto izquierdo llegó a la zona objetivo
+            if (zonaObjetivo.GetComponent<Collider2D>().bounds.Contains(objetoIzquierdo.transform.position))
             {
-                objetoIzquierdo.transform.position = posicionMouse;
+                izquierdoColocado = true; // Marca que el objeto izquierdo fue colocado
+                Debug.Log("¡Minijuego completado!");
+                TerminarMinijuego();
             }
-        }
-
-        // Detectar si el objeto izquierdo tocó la zona objetivo
-        if (izquierdoCollider.enabled && zonaCollider.bounds.Contains(objetoIzquierdo.transform.position))
-        {
-            izquierdoEnZona = true;
-            TerminarMinijuego();
         }
     }
 
+    // Método para mover un objeto con el mouse
+    private void MoverObjetoConMouse(GameObject objeto)
+    {
+        Vector3 posicionMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        posicionMouse.z = 0; // Mantener el objeto en el plano 2D
+        objeto.transform.position = Vector3.Lerp(objeto.transform.position, posicionMouse, 0.2f); // Movimiento suave
+    }
+
+    // Método para iniciar el minijuego
     public void IniciarMinijuego()
     {
-        panelMinijuego.SetActive(true);
+        panelMinijuego.SetActive(true); // Activar el panel del minijuego
+        ResetearMinijuego(); // Asegurar que el estado inicial esté configurado
     }
 
+    // Método para terminar el minijuego
     private void TerminarMinijuego()
     {
-        if (!minijuegoTerminado)
-        {
-            minijuegoTerminado = true; // Evitar que se repita la lógica de ganar
-            Debug.Log("¡Minijuego completado!");
-            panelMinijuego.SetActive(false); // Desactivar el panel del minijuego
-        }
+        // Desactivar todos los objetos del minijuego
+        objetoDerecho.SetActive(false);
+        objetoIzquierdo.SetActive(false);
+        panelMinijuego.SetActive(false);
+
+        // Reiniciar las posiciones después de un breve retraso
+        Invoke(nameof(ResetearMinijuego), 1f); // Reinicia después de 1 segundo
+    }
+
+    // Método para resetear las posiciones y estados del minijuego
+    private void ResetearMinijuego()
+    {
+        // Restaurar posiciones iniciales
+        objetoDerecho.transform.position = posicionInicialDerecho;
+        objetoIzquierdo.transform.position = posicionInicialIzquierdo;
+
+        // Restaurar estados
+        derechoMovido = false;
+        izquierdoColocado = false;
+
+        // Reactivar los objetos del minijuego
+        objetoDerecho.SetActive(true);
+        objetoIzquierdo.SetActive(true);
     }
 }

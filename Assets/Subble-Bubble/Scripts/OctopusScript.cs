@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -36,20 +35,19 @@ public class OctopusScript : MonoBehaviour
         {
             _buttonUI = FindObjectOfType<MiniGameScript>().gameObject;
         }
-        if(_player == null) 
-        {
-            _player = FindObjectOfType<PlayerScript>().gameObject;
-        }
+        //if(_player == null) 
+        //{
+        //    _player = FindObjectOfType<BurbujaScript>().gameObject;
+        //}
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {       
-        Debug.Log(collision.gameObject.tag);
         //transform.Translate(Vector2.down * nextRowOffset);
-        if (collision.gameObject == _player)
+        if (collision.collider.CompareTag("RaycastOrigen"))
         {
             //animator.SetTrigger("Atrapado");
-            StartMinigame();
+            Invoke("StartMinigame", 0f);
         }
         direction = Vector2.zero;
     }

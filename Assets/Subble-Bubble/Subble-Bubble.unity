@@ -536,13 +536,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7bac15a5ebbd44ab5bd50699b1ff1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidadHundimiento: 2
-  raycastDistancia: 10
-  velocidadRotacion: 5
-  capaInteractuable:
+  _cooldown: {fileID: 0}
+  _gravityScale: 0
+  _sideMove: {x: 0, y: 0}
+  _hopDuration: 0
+  _timeBetweenHops: 0
+  _midTimeCounter: 0
+  _hopTimeCounter: 0
+  _canHop: 1
+  _decelerate: 0
+  mousePressed: 0
+  _raycastDistancia: 10
+  _velocidadRotacion: 5
+  _capaInteractuable:
     serializedVersion: 2
-    m_Bits: 4294967295
-  origenRaycast: {fileID: 1279856807}
+    m_Bits: 0
+  _origenRaycast: {fileID: 0}
+  _maxSpeed: 0
+  _minSpeed: 0
+  _DownVelocity: 0
+  Oxygen: 0
+  OxygenMax: 0
+  oxygenManager: {fileID: 0}
+  velocidadIzquierda1: 0
+  velocidadIzquierda2: 0
+  velocidadDerecha1: 0
+  velocidadDerecha2: 0
+  FlashIzq: {fileID: 0}
+  FlashDer: {fileID: 0}
+  _changeFlashButton: {fileID: 0}
+  luz: {fileID: 0}
 --- !u!212 &1828019877
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -603,7 +626,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828019873}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.27, y: 3.89, z: 0}
+  m_LocalPosition: {x: 0.27, y: 2.1, z: 0}
   m_LocalScale: {x: 2.3612, y: 2.3612, z: 2.3612}
   m_ConstrainProportionsScale: 0
   m_Children:
