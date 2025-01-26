@@ -2,92 +2,132 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehavior : MonoBehaviour
+public class Enemigo2D : MonoBehaviour
 {
-    public float phase1Duration = 2f; // Tiempo que dura la fase 1 (sin collider)
-    public float phase2Duration = 3f; // Tiempo que dura la fase 2 (con collider)
-    public float reactionDuration = 2f; // Tiempo de reacción si recibe un ray hit en fase 2
-    public float attackDelay = 1f; // Tiempo antes de atacar en la fase final
-    public float moveSpeed = 2f; // Velocidad de movimiento
+    public float tiempoInmovilInicial = 2f; // Tiempo inicial en el que el enemigo está inmóvil
+    public float tiempoInmovilConCollider = 2f; // Tiempo inmóvil después de activar el collider
+    public float distanciaMovimiento = 3f; // Distancia que se mueve antes de quedarse inmóvil
+    public float velocidadMovimiento = 2f; // Velocidad con la que se mueve
+    public float velocidadMovimientoFinal = 5f; // Velocidad con la que se moverá al final
+    public float distanciaMovimientoFinal = 10f; // Distancia que recorre al final
 
-    private Collider enemyCollider;
-    private bool isRayHit = false;
+    private Collider2D enemigoCollider; // Referencia al collider del enemigo (2D)
+    private Vector3 posicionInicial; // Posición inicial del enemigo
+    private bool estaMoviendose = false; // Controla si el enemigo está en movimiento
+    private int faseActual = 0; // Fase del comportamiento del enemigo
+    private float tiempoFase = 0f; // Tiempo que lleva en la fase actual
+    private Vector3 direccionMovimiento; // Dirección del movimiento calculada a partir de la rotación
+    private Vector3 direccionOriginal; // Dirección inicial en la que se mueve el enemigo
 
-    private enum EnemyState { Phase1, Phase2, Reaction, Attacking }
-    private EnemyState currentState;
+    //public Animator animator;
+    private bool IsMordida = false;
 
-    private void Start()
+    void Start()
     {
-        enemyCollider = GetComponent<Collider>();
+        enemigoCollider = GetComponent<Collider2D>();
+        enemigoCollider.enabled = false; // Desactivar el collider al inicio
+        posicionInicial = transform.localPosition; // Guardar la posición inicial
 
-        if (enemyCollider != null)
-            enemyCollider.enabled = false; // El collider está desactivado inicialmente
-
-        currentState = EnemyState.Phase1;
-        StartCoroutine(Phase1());
+        // Calcular la dirección del movimiento basándonos en la rotación del objeto
+        direccionMovimiento = transform.right; // La dirección será hacia el "lado derecho" del objeto
+        direccionOriginal = direccionMovimiento; // Guardar la dirección original
     }
 
-    private void Update()
+    void Update()
     {
-        // Siempre avanza hacia adelante
-        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-    }
-
-    private IEnumerator Phase1()
-    {
-        // Fase 1: Aparece sin collider
-        yield return new WaitForSeconds(phase1Duration);
-        currentState = EnemyState.Phase2;
-        StartCoroutine(Phase2());
-    }
-
-    private IEnumerator Phase2()
-    {
-        // Fase 2: Activa el collider y continúa avanzando
-        if (enemyCollider != null)
-            enemyCollider.enabled = true;
-
-        yield return new WaitForSeconds(phase2Duration);
-
-        if (!isRayHit)
+        switch (faseActual)
         {
-            currentState = EnemyState.Attacking;
-            StartCoroutine(Attack());
+            case 0: // Fase inicial: enemigo inmóvil
+                tiempoFase += Time.deltaTime;
+                if (tiempoFase >= tiempoInmovilInicial)
+                {
+                    tiempoFase = 0f;
+                    faseActual = 1; // Pasar a la fase de movimiento inicial
+                    estaMoviendose = true;
+                }
+                break;
+
+            case 1: // Fase de movimiento inicial
+                if (estaMoviendose)
+                {
+                    MoverEnemigo(distanciaMovimiento);
+                }
+                else
+                {
+                    tiempoFase += Time.deltaTime;
+                    if (tiempoFase >= tiempoInmovilConCollider)
+                    {
+                        tiempoFase = 0f;
+                        faseActual = 2; // Pasar a la fase de movimiento final
+                        enemigoCollider.enabled = true; // Activar el collider
+                        estaMoviendose = true;
+                    }
+                }
+                break;
+
+            case 2: // Fase de movimiento final
+                if (estaMoviendose)
+                {
+                    MoverEnemigoFinal(distanciaMovimientoFinal);
+                }
+                break;
         }
     }
 
-    private IEnumerator Reaction()
+    private void MoverEnemigo(float distanciaObjetivo)
     {
-        // Reacción al ray hit
-        moveSpeed = 0; // Detiene el movimiento
-        yield return new WaitForSeconds(reactionDuration);
+        float distanciaRecorrida = velocidadMovimiento * Time.deltaTime;
+        transform.localPosition += direccionMovimiento * distanciaRecorrida; // Mover en la dirección calculada
 
-        Destroy(gameObject); // Se elimina después de la reacción
-    }
-
-    private IEnumerator Attack()
-    {
-        // Fase final: Ataca
-        moveSpeed = 0; // Detiene el movimiento para atacar
-        yield return new WaitForSeconds(attackDelay);
-
-        // Aquí colocas la lógica del ataque
-        Debug.Log("Enemy is attacking!");
-    }
-
-    private void OnRayHit()
-    {
-        if (currentState == EnemyState.Phase2)
+        // Comprobar si se alcanzó la distancia deseada
+        float distanciaTotal = Vector3.Distance(posicionInicial, transform.localPosition);
+        if (distanciaTotal >= distanciaObjetivo)
         {
-            isRayHit = true;
-            currentState = EnemyState.Reaction;
-            StartCoroutine(Reaction());
+            estaMoviendose = false; // Detener el movimiento
+            posicionInicial = transform.localPosition; // Actualizar la posición inicial para la siguiente fase
         }
     }
 
-    // Simulación de un ray hit (para pruebas)
-    private void OnMouseDown()
+    private void MoverEnemigoFinal(float distanciaObjetivo)
     {
-        OnRayHit();
+        //animator.SetBool("Mordida", IsMordida);
+        
+        float distanciaRecorrida = velocidadMovimientoFinal * Time.deltaTime;
+        transform.localPosition += direccionMovimiento * distanciaRecorrida; // Mover en la dirección calculada
+
+        // Comprobar si se alcanzó la distancia deseada
+        float distanciaTotal = Vector3.Distance(posicionInicial, transform.localPosition);
+        if (distanciaTotal >= distanciaObjetivo)
+        {
+            estaMoviendose = false; // Detener el movimiento
+            posicionInicial = transform.localPosition; // Actualizar la posición inicial para la siguiente fase
+        }
+    }
+
+    // Detectar la colisión con el objeto "Flash"
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Flash"))
+        {
+            // Detener el movimiento actual
+            estaMoviendose = false;
+
+            // Detener al enemigo por cierto tiempo
+            StartCoroutine(DetenidoPorTiempo());
+        }
+    }
+
+    // Coroutine para detener al enemigo por cierto tiempo y luego cambiar la dirección
+    private IEnumerator DetenidoPorTiempo()
+    {
+        // El enemigo se detiene por el tiempo que se desee
+        yield return new WaitForSeconds(2f); // 2 segundos de espera (ajustable)
+
+        // Cambiar la dirección de movimiento
+        direccionMovimiento = -direccionOriginal; // Moverse en dirección contraria
+
+        // Continuar con el movimiento
+        estaMoviendose = true;
+        IsMordida = true;
     }
 }
