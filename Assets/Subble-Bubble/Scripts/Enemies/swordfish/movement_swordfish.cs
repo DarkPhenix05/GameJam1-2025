@@ -15,6 +15,7 @@ public class movement_swordfish : MonoBehaviour
     [SerializeField] public Transform cameraTransform;
     [SerializeField] private Vector2 relativeOffset = new Vector2(0, -4.5f);
     [SerializeField] private MovementDirection movementDirection = MovementDirection.Vertical;
+    [SerializeField] private Animator animator;
 
     private Vector2 axisDirection;
     private float holdTime = 3f;
@@ -24,15 +25,19 @@ public class movement_swordfish : MonoBehaviour
 
     void Start()
     {
+        AssignPlayerReference();
+        AssignCameraReference();
         InitializeMovement();
-        StartCoroutine(HandleTimers());
     }
 
     void Update()
     {
         if (initialTimerIsOver)
         {
+
+            animator.SetTrigger("shooting");
             Move();
+            
         }
         else if (player)
         {
@@ -43,9 +48,8 @@ public class movement_swordfish : MonoBehaviour
     private void InitializeMovement()
     {
         SetAxisDirection();
-        AssignPlayerReference();
-        AssignCameraReference();
         CalculateInitialPosition();
+        StartCoroutine(HandleTimers());
     }
 
     private void SetAxisDirection()
@@ -83,7 +87,6 @@ public class movement_swordfish : MonoBehaviour
             }
         }
     }
-
 
     private void CalculateInitialPosition()
     {
