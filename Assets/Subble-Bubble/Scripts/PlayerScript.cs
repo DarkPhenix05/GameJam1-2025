@@ -1,7 +1,6 @@
 using UnityEditor.PackageManager;
-using UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -37,15 +36,6 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] public int Oxygen;
     [SerializeField] private int OxygenMax;
 
-    public float _raycastDistancia = 10f; // Distancia del raycast
-    public float _velocidadRotacion = 5f; // Velocidad de rotación del raycast (basado en el mouse)
-    public LayerMask _capaInteractuable; // Capa que el raycast puede impactar (por ejemplo, objetos que interactúan con la burbuja)
-
-    public Transform _origenRaycast; // El Transform del origen del raycast (puedes asignar cualquier GameObject aquí)
-    private RaycastHit _hitInfo; // Información del raycast
-    private Vector2 _raycastDireccion; // Dirección del raycast
-
-
     [Header("Horizontal Velocity")]
     // Velocidades modificables para cada tag
     [SerializeField] private float velocidadIzquierda1;
@@ -59,10 +49,9 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] GameObject _changeFlashButton;
     int countflah = 0;
 
-
     void Start()
     {
-        while (_origenRaycast == null)
+        if (_origenRaycast == null)
             _origenRaycast = transform;
 
         if (_rb == null)
@@ -78,9 +67,9 @@ public class PlayerScript : MonoBehaviour
         PlayerMovement();
         RotarRaycast();
         LanzarRaycast();
+        
     }
-    
-    
+
     void HundirBurbuja()
     {
         if (_rb.velocity.y >= _maxSpeed)
@@ -134,13 +123,18 @@ public class PlayerScript : MonoBehaviour
                 _canHop = true;
             }
         }
+
+        //else if (Input.GetKey(KeyCode.W))
+        //{
+            
+        //}
     }
 
     void RotarRaycast()
     {
-        // Obtener la posición del mouse en el mundo
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = transform.position.z;
+
         _raycastDireccion = (mousePos - _origenRaycast.position).normalized;
 
         float angle = Mathf.Atan2(_raycastDireccion.y, _raycastDireccion.x) * Mathf.Rad2Deg;
@@ -152,10 +146,9 @@ public class PlayerScript : MonoBehaviour
         Debug.DrawRay(_origenRaycast.position, _raycastDireccion * _raycastDistancia, Color.red);
 
         RaycastHit2D hit = Physics2D.Raycast(_origenRaycast.position, _raycastDireccion, _raycastDistancia, _capaInteractuable);
-        
         if (hit.collider != null)
         {
-            //Debug.Log("Impact� con: " + hit.collider.name);
+            //Debug.Log("Impact� con: " + hit.collider.name);
 
             if (hit.collider.CompareTag("Izquierda1"))
             {
@@ -239,9 +232,12 @@ public class PlayerScript : MonoBehaviour
                 {
                     Debug.Log("NoFreno");
                 }
+                
+          
+                
             }
+
         }
-        
         else
         {
             Debug.Log("NoColisiona");
@@ -253,9 +249,6 @@ public class PlayerScript : MonoBehaviour
         if(countflah == 1)
         {
             _changeFlashButton.SetActive(true);
-=======
-            // Si el raycast golpea algo, mostrar la información
-            Debug.Log("Raycast impactó con: " + _hitInfo.collider.name);
         }
     }
 
@@ -266,19 +259,5 @@ public class PlayerScript : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawRay(_origenRaycast.position, _raycastDireccion * _raycastDistancia);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision == null) return;
-        else
-        {
-            Debug.Log(_rb.velocity);
-        }
     }
 }
