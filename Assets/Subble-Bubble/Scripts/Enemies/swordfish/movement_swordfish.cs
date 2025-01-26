@@ -4,21 +4,32 @@ using UnityEngine;
 
 public class movement_swordfish : MonoBehaviour
 {
-    [SerializeField] private float speed = 7f;
+    [SerializeField] private float speed = 2f;
     [SerializeField] private Transform player;
     [SerializeField] private Vector2 relativeOffset = new Vector2(0, -4.5f);
 
     private float holdTime = 3f;
-    private float destructionTime = 5f;
+    private float destructionTime = 3f;
     private bool isMovingStraight = false;
 
     void Start()
     {
-        if (player)
+        if (player == null)
         {
-            Vector3 newPosition = player.position + new Vector3(relativeOffset.x, relativeOffset.y, 0);
-            transform.position = newPosition;
+            GameObject foundPlayer = GameObject.FindWithTag("RaycastOrigen");
+            if (foundPlayer)
+            {
+                player = foundPlayer.transform;
+            }
+            else
+            {
+                Debug.LogError("El objeto 'player' no está asignado y no se encontró un objeto con el tag 'RaycastOrigen'.");
+                return;
+            }
         }
+
+        Vector3 newPosition = player.position + new Vector3(relativeOffset.x, relativeOffset.y, 0);
+        transform.position = newPosition;
 
         StartCoroutine(HandleMovement());
     }
@@ -54,7 +65,7 @@ public class movement_swordfish : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("RaycastOrigen"))
+        if (collision.transform == player)
         {
             gameObject.SetActive(false);
         }
