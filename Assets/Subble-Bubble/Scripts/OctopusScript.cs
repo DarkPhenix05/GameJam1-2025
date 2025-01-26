@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class OctopusScript : MonoBehaviour
 {
@@ -34,14 +35,14 @@ public class OctopusScript : MonoBehaviour
         {
             _buttonUI = FindObjectOfType<MiniGameScript>().gameObject;
         }
-        if (_player == null)
+        if(_player == null) 
         {
             _player = FindObjectOfType<BurbujaScript>().gameObject;
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
-    {
+    {       
         //transform.Translate(Vector2.down * nextRowOffset);
         if (collision.collider.CompareTag("RaycastOrigen"))
         {
@@ -64,17 +65,17 @@ public class OctopusScript : MonoBehaviour
     {
         if (!_win)
         {
-            Vector3 targetDirection = new Vector3(0.0f, 0.0f, _player.transform.position.z - transform.position.z);
-            transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, (speed * Time.deltaTime));
-            Vector2 rot = Vector3.RotateTowards(transform.forward, targetDirection, (speed * Time.deltaTime), 0.0f);
+            Vector3 targetDirection = new Vector3 (0.0f,0.0f,_player.transform.position.z - transform.position.z);
+            transform.position = Vector3.MoveTowards(transform.position, _player.transform.position , (speed * Time.deltaTime));
+            Vector2 rot = Vector3.RotateTowards(transform.forward, targetDirection , (speed * Time.deltaTime), 0.0f);
 
             transform.rotation = Quaternion.LookRotation(rot);
         }
         else
         {
-            Vector3 targetDirection = new Vector3(0.0f, 0.0f, _player.transform.position.z - transform.position.z);
+            Vector3 targetDirection = new Vector3 (0.0f,0.0f,_player.transform.position.z - transform.position.z);
             transform.position += new Vector3(-speed * Time.deltaTime, speed * Time.deltaTime, 0.0f);
-            Vector3 rot = (Vector3.RotateTowards(transform.right, targetDirection, (speed * Time.deltaTime), 0.0f) - new Vector3(0.0f, 0.0f, 180.0f));
+            Vector3 rot = (Vector3.RotateTowards(transform.right, targetDirection, (speed * Time.deltaTime), 0.0f) - new Vector3(0.0f,0.0f,180.0f));
 
             transform.rotation = Quaternion.LookRotation(rot);
         }

@@ -1,11 +1,8 @@
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.InputSystem;
 
 public class BurbujaScript : MonoBehaviour
 {
+
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private float _gravityScale;
     [SerializeField] private Vector2 _sideMove;
@@ -13,12 +10,12 @@ public class BurbujaScript : MonoBehaviour
     [SerializeField] private float _decelerate;
 
     public float _raycastDistancia = 10f; // Distancia del raycast
-    public float _velocidadRotacion = 5f; // Velocidad de rotación del raycast (basado en el mouse)
-    public LayerMask _capaInteractuable; // Capa que el raycast puede impactar (por ejemplo, objetos que interactúan con la burbuja)
+    public float _velocidadRotacion = 5f; // Velocidad de rotaciÃ³n del raycast (basado en el mouse)
+    public LayerMask _capaInteractuable; // Capa que el raycast puede impactar (por ejemplo, objetos que interactÃºan con la burbuja)
 
-    public Transform _origenRaycast; // El Transform del origen del raycast (puedes asignar cualquier GameObject aquí)
-    private RaycastHit _hitInfo; // Información del raycast
-    private Vector2 _raycastDireccion; // Dirección del raycast
+    public Transform _origenRaycast; // El Transform del origen del raycast (puedes asignar cualquier GameObject aquÃ­)
+    private RaycastHit _hitInfo; // InformaciÃ³n del raycast
+    private Vector2 _raycastDireccion; // DirecciÃ³n del raycast
 
     [SerializeField] private int _maxSpeed; // The max speed the capsule can axelerate to.
     [SerializeField] private int _minSpeed; // The min speed the capsule can axelerate to.
@@ -27,9 +24,9 @@ public class BurbujaScript : MonoBehaviour
     private float _counter = 0.0f;
     private bool _detectInput = true;
 
+
     void Start()
     {
-        // Si no se asignó un origen del raycast, usamos el centro de la burbuja (el mismo GameObject)
         while (_origenRaycast == null)
         {
             _origenRaycast = transform;
@@ -54,20 +51,15 @@ public class BurbujaScript : MonoBehaviour
         // Hacer que la burbuja se hunda
         HundirBurbuja();
 
-        // MovePlayer
-        PlayerMovement();
-
         // Rotar el raycast hacia el mouse
         RotarRaycast();
 
         // Lanzar el raycast para detectar colisiones
         LanzarRaycast();
-
-        //Debug.Log(_rb.velocity.y);
     }
 
 
-    // Función para hacer que la burbuja se hunda
+    // FunciÃ³n para hacer que la burbuja se hunda
     void HundirBurbuja()
     {
         if(_rb.velocity.y >= _maxSpeed)
@@ -106,43 +98,43 @@ public class BurbujaScript : MonoBehaviour
         }
     }
 
-    // Función para rotar el raycast en función de la posición del mouse
+    // FunciÃ³n para rotar el raycast en funciÃ³n de la posiciÃ³n del mouse
     void RotarRaycast()
     {
-        // Obtener la posición del mouse en el mundo
+        // Obtener la posiciÃ³n del mouse en el mundo
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = transform.position.z; // Asegurarnos de que el raycast solo se mueva en el plano XY (2D)
 
-        // Obtener la dirección hacia el mouse
-        _raycastDireccion = (mousePos - _origenRaycast.position).normalized;
+        // Obtener la direcciÃ³n hacia el mouse
+        raycastDireccion = (mousePos - origenRaycast.position).normalized;
 
         // Rotar el origenRaycast para que apunte hacia el mouse
-        float angle = Mathf.Atan2(_raycastDireccion.y, _raycastDireccion.x) * Mathf.Rad2Deg;
-        _origenRaycast.rotation = Quaternion.Slerp(_origenRaycast.rotation, Quaternion.Euler(0f, 0f, angle), _velocidadRotacion * Time.deltaTime);
+        float angle = Mathf.Atan2(raycastDireccion.y, raycastDireccion.x) * Mathf.Rad2Deg;
+        origenRaycast.rotation = Quaternion.Slerp(origenRaycast.rotation, Quaternion.Euler(0f, 0f, angle), velocidadRotacion * Time.deltaTime);
     }
 
-    // Función para lanzar el raycast y detectar colisiones
+    // FunciÃ³n para lanzar el raycast y detectar colisiones
     void LanzarRaycast()
     {
-        // Dibujar el raycast para ver la dirección en la escena (utilizando Gizmos)
-        Debug.DrawRay(_origenRaycast.position, _raycastDireccion * _raycastDistancia, Color.red);
+        // Dibujar el raycast para ver la direcciÃ³n en la escena (utilizando Gizmos)
+        Debug.DrawRay(origenRaycast.position, raycastDireccion * raycastDistancia, Color.red);
 
         // Lanzar el raycast
-        if (Physics.Raycast(_origenRaycast.position, _raycastDireccion, out _hitInfo, _raycastDistancia, _capaInteractuable))
+        if (Physics.Raycast(origenRaycast.position, raycastDireccion, out hitInfo, raycastDistancia, capaInteractuable))
         {
-            // Si el raycast golpea algo, mostrar la información
-            Debug.Log("Raycast impactó con: " + _hitInfo.collider.name);
+            // Si el raycast golpea algo, mostrar la informaciÃ³n
+            Debug.Log("Raycast impactÃ³ con: " + hitInfo.collider.name);
         }
     }
 
     // Dibujar el raycast con Gizmos en la vista de la escena
     void OnDrawGizmos()
     {
-        if (_origenRaycast == null) return;
+        if (origenRaycast == null) return;
 
         // Dibujar el raycast en Gizmos
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(_origenRaycast.position, _raycastDireccion * _raycastDistancia);
+        Gizmos.DrawRay(origenRaycast.position, raycastDireccion * raycastDistancia);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
