@@ -5,7 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/OrdenMenus/Escenas/Menu.unity
+    guid: 9ae02a0511e7ad643873780646802247
+  - enabled: 1
+    path: Assets/Scenes/OrdenMenus/Escenas/Creditos.unity
+    guid: 41f86a7be0fc0af4e8f81ea9b8cd82f9
+  - enabled: 1
+    path: Assets/Scenes/OrdenMenus/Escenas/GameOver.unity
+    guid: 27b1c4f970ff600408d90f5fb8eb2a5d
+  - enabled: 1
+    path: Assets/Scenes/OrdenMenus/Escenas/Level.unity
+    guid: 1dfd7b7b18984d147a77e6b9791ec15d
+  - enabled: 1
+    path: Assets/Scenes/OrdenMenus/Escenas/Turorial.unity
+    guid: 38e1cc352bf4dcb4d8232c480bd4e221
   m_configObjects: {}

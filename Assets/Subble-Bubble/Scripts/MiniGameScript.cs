@@ -9,12 +9,19 @@ public class MiniGameScript : MonoBehaviour
 
     private bool isMinigameActive = false;
     private bool isGameOver = false;
+    public GameObject clickimage;
+    public GameObject _octopusScript;
+
+    [Header("ClicsControl")]
+    [SerializeField]
+    private int clicksToWin = 10;
+    private int currentClickCount = 0;
 
     [SerializeField]
     private float gameOverTimer = 0f;
 
 
-    // Con esto mandamos a llamar el minijuego de esta forma iniciandolo al colisionar con el pulpo.
+   // Con esto mandamos a llamar el minijuego de esta forma iniciandolo al colisionar con el pulpo.
     private void OnCollisionEnter2D(Collision2D collision)
     {
         print("El Pulpasio te ha atrapado");
@@ -23,39 +30,52 @@ public class MiniGameScript : MonoBehaviour
 
 
     //Al iniciar el minijuego se nos dara una alerta para escapar de el, teniendo un temporizador.
-   public void StartMinigame()
+    public void StartMinigame() 
     {
         print("Escapa del Pulpo");
-        isMinigameActive = true;
+        isMinigameActive=true;
         isGameOver = false;
         gameOverTimer = 0f;
+        currentClickCount = 0;
+        clickimage.SetActive(true);
     }
 
     void Start()
     {
-
+        if (_octopusScript == null)
+        {
+            _octopusScript = FindObjectOfType<OctopusScript>().gameObject;
+        }
     }
 
     // Aquí se encuentra el funcionamiento del minijuego del minijuego con raycast y detección de click
     void Update()
     {
-        if (isMinigameActive)
+        if (isMinigameActive) 
         {
-            if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
             {
                 print("Clic Detectado");
                 Vector2 ray = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(ray, Vector2.zero);
+                // print("Objeto clicado: " + hit.collider.name);
                 if (hit.collider != null && hit.collider.CompareTag("TargetZone"))
                 {
-                    MinigameSuccess();
+                    print("Zona objetivo clicada");
+                    currentClickCount++;
+                    print("Clics acuales" + currentClickCount);
+
+                    if (currentClickCount >= clicksToWin)
+                    {
+                        MinigameSuccess();
+                    }
                 }
             }
 
-            if (isGameOver)
+        if (isGameOver) 
             {
                 gameOverTimer += Time.deltaTime;
-                if (gameOverTimer >= gameOverDelay)
+                if (gameOverTimer >= gameOverDelay) 
                 {
                     EndMinigame();
                 }
@@ -67,15 +87,15 @@ public class MiniGameScript : MonoBehaviour
     {
         print("Desciende");
         isMinigameActive = false;
+        DisableMinigameObjects();
     }
 
     //Esta es la pantalla de GameOver
     void EndMinigame()
-    {
-        print("GameOver");
+    { print("GameOver");
         isMinigameActive = false;
         isGameOver = false;
-    }
+            }
 
     // Aqui se encuentra la pantalla de victoria del minijuego
     private void OnTriggerEnter2D(Collider2D other)
@@ -85,5 +105,15 @@ public class MiniGameScript : MonoBehaviour
             print("Minijuego superado");
             MinigameSuccess();
         }
+    }
+    void DisableMinigameObjects()
+    {
+        _octopusScript.GetComponent<OctopusScript>().Victory();
+        /*
+         * Se implemento una corrutina en el OctoScript el cual esta en el GO de "pulpo"
+         * Este escript esta en la UI, para facilitar que pulpo oobtenga su referencia.
+         * 
+         * Se quito la logica de TAGS
+        */
     }
 }
