@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -43,11 +44,12 @@ public class OctopusScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {       
+        Debug.Log(collision.gameObject.tag);
         //transform.Translate(Vector2.down * nextRowOffset);
-        if (collision.collider.CompareTag("RaycastOrigen"))
+        if (collision.gameObject == _player)
         {
             //animator.SetTrigger("Atrapado");
-            Invoke("StartMinigame", 0f);
+            StartMinigame();
         }
         direction = Vector2.zero;
     }

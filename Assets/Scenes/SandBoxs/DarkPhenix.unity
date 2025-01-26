@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 70890496}
   - component: {fileID: 70890498}
   - component: {fileID: 70890497}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: OxigenoIzquierda
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,6 +387,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Octopus
       objectReference: {fileID: 0}
+    - target: {fileID: 7176205982566227312, guid: c1b709a0d8d2f294780d8c6fcde57436, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 357677172}
+    - target: {fileID: 7176205982566227312, guid: c1b709a0d8d2f294780d8c6fcde57436, type: 3}
+      propertyPath: _buttonUI
+      value: 
+      objectReference: {fileID: 1869314883}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -438,7 +446,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 328758066}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Botones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +492,7 @@ GameObject:
   - component: {fileID: 357677173}
   m_Layer: 0
   m_Name: Player
-  m_TagString: RaycastOrigen
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -887,7 +895,7 @@ GameObject:
   - component: {fileID: 706535865}
   - component: {fileID: 706535867}
   - component: {fileID: 706535866}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Freno
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1017,7 +1025,7 @@ GameObject:
   - component: {fileID: 893789600}
   - component: {fileID: 893789602}
   - component: {fileID: 893789601}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FlashIzquierda
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1147,7 +1155,7 @@ GameObject:
   - component: {fileID: 895151824}
   - component: {fileID: 895151826}
   - component: {fileID: 895151825}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MovimientoPezDercha
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1537,7 +1545,7 @@ GameObject:
   - component: {fileID: 1213357731}
   - component: {fileID: 1213357733}
   - component: {fileID: 1213357732}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FlashDerecha
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1667,7 +1675,7 @@ GameObject:
   - component: {fileID: 1239782370}
   - component: {fileID: 1239782372}
   - component: {fileID: 1239782371}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: OxigenoDerecha
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2115,7 +2123,7 @@ GameObject:
   - component: {fileID: 1604479249}
   - component: {fileID: 1604479251}
   - component: {fileID: 1604479250}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MovimientoPezDerecha1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2321,7 +2329,7 @@ GameObject:
   - component: {fileID: 1723526807}
   - component: {fileID: 1723526809}
   - component: {fileID: 1723526808}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MovimentoPezIzquierda
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2440,6 +2448,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1869314883 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4902217432361836392, guid: 8f236b70fdeb3754e939da84ff104bf6, type: 3}
+  m_PrefabInstance: {fileID: 1560861677}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1959689454
 GameObject:
   m_ObjectHideFlags: 0
@@ -2603,7 +2616,7 @@ GameObject:
   - component: {fileID: 2125495085}
   - component: {fileID: 2125495087}
   - component: {fileID: 2125495086}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MovimientoPezIzquierda1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
