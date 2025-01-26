@@ -19,7 +19,7 @@ public class Enemigo2D : MonoBehaviour
     private Vector3 direccionMovimiento; // Dirección del movimiento calculada a partir de la rotación
     private Vector3 direccionOriginal; // Dirección inicial en la que se mueve el enemigo
 
-    //public Animator animator;
+    [SerializeField] public Animator animator;
     private bool IsMordida = false;
 
     void Start()
@@ -90,7 +90,7 @@ public class Enemigo2D : MonoBehaviour
 
     private void MoverEnemigoFinal(float distanciaObjetivo)
     {
-        //animator.SetBool("Mordida", IsMordida);
+        animator.SetBool("IsMordida", true);
         
         float distanciaRecorrida = velocidadMovimientoFinal * Time.deltaTime;
         transform.localPosition += direccionMovimiento * distanciaRecorrida; // Mover en la dirección calculada
@@ -109,10 +109,10 @@ public class Enemigo2D : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Flash"))
         {
-            // Detener el movimiento actual
+            //// Detener el movimiento actual
             estaMoviendose = false;
 
-            // Detener al enemigo por cierto tiempo
+            //// Detener al enemigo por cierto tiempo
             StartCoroutine(DetenidoPorTiempo());
         }
     }
