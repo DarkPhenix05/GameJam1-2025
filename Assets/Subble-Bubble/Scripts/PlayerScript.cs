@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BurbujaScript : MonoBehaviour
+public class PlayerScript : MonoBehaviour
 {
 
     [SerializeField] private Rigidbody2D _rb;
