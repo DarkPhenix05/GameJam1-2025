@@ -5,6 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - RaycastOrigen
+  - Izquierda1
+  - Izquierda2
+  - Derecha1
+  - Derecha2
+  - FlashDerecha
+  - FlashIzquierda
+  - Freno
   layers:
   - Default
   - TransparentFX
@@ -15,9 +22,9 @@ TagManager:
   - BotonesBurbujaInteractuables
   - 
   - 
-  - 
+  - Flash
   - RayCastInteractions
-  - 
+  - _capaInteractuable
   - 
   - 
   - 
