@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6061336649756479994}
   - component: {fileID: 3674128011249958298}
   m_Layer: 0
-  m_Name: swordfish
+  m_Name: vertical_swordfish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,4 +99,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   player: {fileID: 0}
+  cameraTransform: {fileID: 0}
   relativeOffset: {x: 0, y: -4.5}
+  movementDirection: 1

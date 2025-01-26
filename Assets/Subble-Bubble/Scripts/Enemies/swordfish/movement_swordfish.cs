@@ -4,15 +4,56 @@ using UnityEngine;
 
 public class movement_swordfish : MonoBehaviour
 {
+    private enum MovementDirection
+    {
+        Horizontal,
+        Vertical
+    }
+
     [SerializeField] private float speed = 2f;
     [SerializeField] private Transform player;
+    [SerializeField] public Transform cameraTransform;
     [SerializeField] private Vector2 relativeOffset = new Vector2(0, -4.5f);
+    [SerializeField] private MovementDirection movementDirection = MovementDirection.Vertical;
 
+    private Vector2 axisDirection;
     private float holdTime = 3f;
     private float destructionTime = 3f;
-    private bool isMovingStraight = false;
+    private bool initialTimerIsOver = false;
+    private float fixedYPosition;
 
     void Start()
+    {
+        InitializeMovement();
+        StartCoroutine(HandleTimers());
+    }
+
+    void Update()
+    {
+        if (initialTimerIsOver)
+        {
+            Move();
+        }
+        else if (player)
+        {
+            UpdatePositionRelativeToPlayer();
+        }
+    }
+
+    private void InitializeMovement()
+    {
+        SetAxisDirection();
+        AssignPlayerReference();
+        AssignCameraReference();
+        CalculateInitialPosition();
+    }
+
+    private void SetAxisDirection()
+    {
+        axisDirection = movementDirection == MovementDirection.Vertical ? Vector2.up : Vector2.right;
+    }
+
+    private void AssignPlayerReference()
     {
         if (player == null)
         {
@@ -24,39 +65,65 @@ public class movement_swordfish : MonoBehaviour
             else
             {
                 Debug.LogError("El objeto 'player' no está asignado y no se encontró un objeto con el tag 'RaycastOrigen'.");
+                enabled = false;
                 return;
             }
         }
-
-        Vector3 newPosition = player.position + new Vector3(relativeOffset.x, relativeOffset.y, 0);
-        transform.position = newPosition;
-
-        StartCoroutine(HandleMovement());
     }
 
-    void Update()
+    private void AssignCameraReference()
     {
-        if (isMovingStraight)
+        if (cameraTransform == null)
         {
-            Move();
+            cameraTransform = player.GetComponentInChildren<Camera>()?.transform;
+            if (cameraTransform == null)
+            {
+                Debug.LogError("No se encontró una cámara asociada al jugador. Por favor, asigna una cámara en el Inspector.");
+                enabled = false;
+            }
         }
-        else if (player)
+    }
+
+
+    private void CalculateInitialPosition()
+    {
+        if (player == null) return;
+
+        Vector3 playerPosition = player.position;
+        Vector3 newPosition = new Vector3(playerPosition.x + relativeOffset.x, playerPosition.y + relativeOffset.y, transform.position.z);
+        transform.position = newPosition;
+
+        if (movementDirection == MovementDirection.Horizontal)
         {
-            Vector3 newPosition = player.position + new Vector3(relativeOffset.x, relativeOffset.y, 0);
-            transform.position = newPosition;
+            fixedYPosition = transform.position.y - cameraTransform.position.y;
         }
+    }
+
+    private void UpdatePositionRelativeToPlayer()
+    {
+        Vector3 playerPosition = player.position;
+        Vector3 newPosition = new Vector3(playerPosition.x + relativeOffset.x, playerPosition.y + relativeOffset.y, transform.position.z);
+        transform.position = newPosition;
     }
 
     private void Move()
     {
-        transform.Translate(Vector2.up * speed * Time.deltaTime);
+        if (movementDirection == MovementDirection.Horizontal)
+        {
+            float adjustedY = cameraTransform.position.y + fixedYPosition;
+            transform.position = new Vector2(transform.position.x + speed * Time.deltaTime, adjustedY);
+        }
+        else
+        {
+            transform.Translate((Vector3)axisDirection * speed * Time.deltaTime);
+        }
     }
 
-    private IEnumerator HandleMovement()
+    private IEnumerator HandleTimers()
     {
         yield return new WaitForSeconds(holdTime);
 
-        isMovingStraight = true;
+        initialTimerIsOver = true;
 
         yield return new WaitForSeconds(destructionTime);
 
