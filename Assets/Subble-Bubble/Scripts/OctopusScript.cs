@@ -38,7 +38,7 @@ public class OctopusScript : MonoBehaviour
         }
         if(_player == null) 
         {
-            _player = FindObjectOfType<BurbujaScript>().gameObject;
+            _player = FindObjectOfType<PlayerScript>().gameObject;
         }
     }
 
