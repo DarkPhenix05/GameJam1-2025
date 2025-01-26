@@ -5,19 +5,28 @@ TagManager:
   serializedVersion: 2
   tags:
   - RaycastOrigen
+  - MinigameObject
+  - TargetZone
+  - Izquierda1
+  - Izquierda2
+  - Derecha1
+  - Derecha2
+  - FlashDerecha
+  - FlashIzquierda
+  - Freno
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemies
   - Water
   - UI
   - BotonesBurbujaInteractuables
   - 
   - 
-  - 
+  - Flash
   - RayCastInteractions
-  - 
+  - _capaInteractuable
   - 
   - 
   - 

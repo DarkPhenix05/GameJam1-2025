@@ -1,0 +1,501 @@
+fileFormatVersion: 2
+guid: 1f819b8d3a417844da57240063156c99
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_0
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 0
+        width: 716
+        height: 648
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0f26caa760f98c45ba68db624c63a7c
+      internalID: 873846555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_1
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 0
+        width: 680
+        height: 648
+      alignment: 9
+      pivot: {x: 0.53319883, y: 0.4860649}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 939f9d279cabb5440b2f1cba4c79b759
+      internalID: 2069719640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_2
+      rect:
+        serializedVersion: 2
+        x: 1534
+        y: 0
+        width: 710
+        height: 648
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00a5de9dc8ccc80439d95f6d5203144b
+      internalID: -1015560218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_3
+      rect:
+        serializedVersion: 2
+        x: 2267
+        y: 33
+        width: 652
+        height: 567
+      alignment: 9
+      pivot: {x: 0.54847467, y: 0.507963}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77b4f2b9e78526941b7b9ee1f519a841
+      internalID: -1521116897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_4
+      rect:
+        serializedVersion: 2
+        x: 2985
+        y: 63
+        width: 747
+        height: 526
+      alignment: 9
+      pivot: {x: 0.50302315, y: 0.48712453}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edac4893fd04c8345b730ec12e375c4d
+      internalID: -1724452910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_5
+      rect:
+        serializedVersion: 2
+        x: 3754
+        y: 100
+        width: 882
+        height: 478
+      alignment: 9
+      pivot: {x: 0.43857178, y: 0.4480493}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9121bd48f60053747abe4a6180bb320c
+      internalID: 787458249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_6
+      rect:
+        serializedVersion: 2
+        x: 4720
+        y: 195
+        width: 1004
+        height: 250
+      alignment: 9
+      pivot: {x: 0.4078116, y: 0.45485023}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b02fdf57c952a1f4386666fb1acdfcfd
+      internalID: 115755589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_7
+      rect:
+        serializedVersion: 2
+        x: 5812
+        y: 203
+        width: 1018
+        height: 235
+      alignment: 9
+      pivot: {x: 0.4002093, y: 0.50000024}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df731bafe96aab747853d520b179f488
+      internalID: -51188617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_8
+      rect:
+        serializedVersion: 2
+        x: 6867
+        y: 203
+        width: 1054
+        height: 235
+      alignment: 9
+      pivot: {x: 0.38005745, y: 0.49039385}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 582833cf94e84de4080825f7a7856790
+      internalID: 1518338482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_9
+      rect:
+        serializedVersion: 2
+        x: 7965
+        y: 196
+        width: 1022
+        height: 235
+      alignment: 9
+      pivot: {x: 0.40280908, y: 0.5096064}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9817582a99edbdc4db9fd8ac3f269df0
+      internalID: -1175405762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_10
+      rect:
+        serializedVersion: 2
+        x: 9034
+        y: 195
+        width: 1011
+        height: 250
+      alignment: 9
+      pivot: {x: 0.3928196, y: 0.47291017}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a3a73e7de6ccc3479330a742abd1a2e
+      internalID: 1441822945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_11
+      rect:
+        serializedVersion: 2
+        x: 10067
+        y: 99
+        width: 907
+        height: 435
+      alignment: 9
+      pivot: {x: 0.42284188, y: 0.5103793}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 946b43753420a514c82e14009633377b
+      internalID: 1802082979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_12
+      rect:
+        serializedVersion: 2
+        x: 11032
+        y: 18
+        width: 871
+        height: 619
+      alignment: 9
+      pivot: {x: 0.437796, y: 0.478118}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64efa9321907fd3499eac6d275393747
+      internalID: -1681467051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_13
+      rect:
+        serializedVersion: 2
+        x: 11979
+        y: 26
+        width: 747
+        height: 589
+      alignment: 9
+      pivot: {x: 0.48186758, y: 0.5000001}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd2b65e2a279cb246aa96adc0dfab58c
+      internalID: -255444712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_14
+      rect:
+        serializedVersion: 2
+        x: 12843
+        y: 0
+        width: 717
+        height: 648
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04d5ce4ac7feea64c9a63cf077457385
+      internalID: -427069145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_15
+      rect:
+        serializedVersion: 2
+        x: 13598
+        y: 0
+        width: 637
+        height: 648
+      alignment: 9
+      pivot: {x: 0.556705, y: 0.4930325}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ecd1e59ebc2de14aaa30d7485693a15
+      internalID: -1019932508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PULPO_MOVIMIENTO_16
+      rect:
+        serializedVersion: 2
+        x: 14315
+        y: 0
+        width: 579
+        height: 648
+      alignment: 9
+      pivot: {x: 0.6169682, y: 0.48954868}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12d815ec712645f479e7f7673609f35c
+      internalID: -1718797886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      PULPO_MOVIMIENTO_0: 873846555
+      PULPO_MOVIMIENTO_1: 2069719640
+      PULPO_MOVIMIENTO_10: 1441822945
+      PULPO_MOVIMIENTO_11: 1802082979
+      PULPO_MOVIMIENTO_12: -1681467051
+      PULPO_MOVIMIENTO_13: -255444712
+      PULPO_MOVIMIENTO_14: -427069145
+      PULPO_MOVIMIENTO_15: -1019932508
+      PULPO_MOVIMIENTO_16: -1718797886
+      PULPO_MOVIMIENTO_2: -1015560218
+      PULPO_MOVIMIENTO_3: -1521116897
+      PULPO_MOVIMIENTO_4: -1724452910
+      PULPO_MOVIMIENTO_5: 787458249
+      PULPO_MOVIMIENTO_6: 115755589
+      PULPO_MOVIMIENTO_7: -51188617
+      PULPO_MOVIMIENTO_8: 1518338482
+      PULPO_MOVIMIENTO_9: -1175405762
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
