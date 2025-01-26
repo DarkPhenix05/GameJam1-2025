@@ -5,11 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - RaycastOrigen
+  - MinigameObject
+  - TargetZone
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemies
   - Water
   - UI
   - BotonesBurbujaInteractuables
