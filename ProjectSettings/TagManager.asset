@@ -7,6 +7,10 @@ TagManager:
   - RaycastOrigen
   - MinigameObject
   - TargetZone
+  - Izquierda1
+  - Izquierda2
+  - Derecha1
+  - Derecha2
   layers:
   - Default
   - TransparentFX
